@@ -9,9 +9,11 @@ import {
   selectCount,
 } from './counterSlice';
 import styles from './Counter.module.css';
+import { selectUsers } from '../user/userSlice';
 
 export function Counter() {
-  const count = useSelector(selectCount);
+  // const count = useSelector(selectCount);
+  const count = useSelector(selectUsers);
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
