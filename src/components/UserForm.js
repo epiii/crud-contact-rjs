@@ -71,14 +71,14 @@ const Input = tw.input`
 `
 
 const UserForm = () => {
-    const initialUserState = {
-        id: "",
-        fullName: "",
-        email: "",
-        address: "",
-        phone: "",
-        password: "",
-    };
+    // const initialUserState = {
+    //     id: "",
+    //     fullName: "",
+    //     email: "",
+    //     address: "",
+    //     phone: "",
+    //     password: "",
+    // };
 
     return (
         <Form>
