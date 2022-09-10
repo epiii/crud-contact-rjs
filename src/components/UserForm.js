@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import tw from "tailwind-styled-components"
+import { submit } from '../features/user/userSlice'
 
 const Button = tw.div`
     ${(p) => (p.$primary ? "bg-indigo-600" : "bg-white")}
@@ -71,73 +73,123 @@ const Input = tw.input`
 `
 
 const UserForm = () => {
-    // const initialUserState = {
-    //     id: "",
-    //     fullName: "",
-    //     email: "",
-    //     address: "",
-    //     phone: "",
-    //     password: "",
-    // };
+    const initialUserState = {
+        id: "",
+        fullName: "",
+        email: "",
+        address: "",
+        phone: "",
+        password: "",
+    };
+    const [userData, setUserData] = useState(initialUserState)
+    const dispatch = useDispatch()
+
+    const onInputChange = (e) => {
+        const { name, value } = e.target;
+        console.log('onchange', name, value)
+
+        setUserData({
+            ...userData,
+            [name]: value
+        });
+    };
+
+    const onSubmitForm = () => {
+        dispatch(submit(userData))
+    }
 
     return (
-        <Form>
-            <FormHeader>
-                Personal information
-            </FormHeader>
-            <SubHeader>
-                This information will be displayed publicly so be careful what you share.
-            </SubHeader>
+        <>
+            {JSON.stringify(userData, '\t', 2)}
+            <Form onSubmit={onSubmitForm}>
+                <FormHeader>
+                    Personal information
+                </FormHeader>
+                <SubHeader>
+                    This information will be displayed publicly so be careful what you share.
+                </SubHeader>
 
-            <InputRow >
-                <Label for="fullname">
-                    Full Name
-                </Label>
-                <Input placeholder="Your Name" />
-            </InputRow>
-            <InputRow >
-                <Label for="fullname">
-                    Email Address
-                </Label>
-                <Input placeholder="yourmail@mail.com" />
-            </InputRow>
-            <InputRow >
-                <Label for="fullname">
-                    Date of Birth
-                </Label>
-                <Input placeholder="dd/mm/yy" />
-            </InputRow>
-            <InputRow >
-                <Label for="fullname">
-                    Address
-                </Label>
-                <Input placeholder="Street Address" />
-            </InputRow>
-            <InputRow >
-                <Label for="fullname">
-                    Phone Number
-                </Label>
-                <Input placeholder="e.g 813 84938 8989" />
-            </InputRow>
-            <InputRow >
-                <Label for="password">
-                    Password
-                </Label>
-                <Input placeholder="*******" />
-            </InputRow>
 
-            <div className='flex '>
-                <Button $primary={false}>
-                    Cancel
-                </Button>
-                <Button $primary>
-                    Submit
-                </Button>
-                <Button $primary={false} >
-                    Auto Generate
-                </Button>
-            </div>
-        </Form>
+                <InputRow >
+                    <Label for="fullname">
+                        Full Name
+                    </Label>
+                    <Input
+                        name="fullName"
+                        onChange={onInputChange}
+                        placeholder="Your Name"
+                    />
+                </InputRow>
+                <InputRow >
+                    <Label for="fullname">
+                        Email Address
+                    </Label>
+                    <Input
+                        name="email"
+                        onChange={onInputChange}
+                        placeholder="yourmail@mail.com"
+                    />
+                </InputRow>
+                <InputRow >
+                    <Label for="dob">
+                        Date of Birth
+                    </Label>
+                    <Input
+                        name="dob"
+                        onChange={onInputChange}
+                        placeholder="dd/mm/yy"
+                    />
+                </InputRow>
+                <InputRow >
+                    <Label for="address">
+                        Address
+                    </Label>
+                    <Input
+                        name="address"
+                        onChange={onInputChange}
+                        placeholder="Street Address"
+                    />
+                </InputRow>
+                <InputRow >
+                    <Label for="phone">
+                        Phone Number
+                    </Label>
+                    <Input
+                        name="phone"
+                        onChange={onInputChange}
+                        placeholder="e.g 813 84938 8989"
+                    />
+                </InputRow>
+                <InputRow >
+                    <Label for="password">
+                        Password
+                    </Label>
+                    <Input
+                        type="password"
+                        name="password"
+                        onChange={onInputChange}
+                        placeholder="*******"
+                    />
+                </InputRow>
+
+                <div className='flex '>
+                    <Button $primary={false}>
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={onSubmitForm}
+                        type="submit"
+                        $primary
+                    >
+                        Submit
+                    </Button>
+                    <Button $primary={false} >
+                        Auto Generate
+                    </Button>
+                </div>
+            </Form>
+        </>
+
     )
 }
 

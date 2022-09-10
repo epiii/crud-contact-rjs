@@ -8,8 +8,9 @@ function UserList() {
 
     return (
         <>
+            {/* {JSON.stringify(users, '\t', 2)} */}
             {users && users.map(user => (
-                <UserCard />
+                <UserCard {...user} />
             ))}
         </>
     )

@@ -22,8 +22,10 @@ export const userSlice = createSlice({
   reducers: {
     submit: (state, action) => {
       state.value += 1;
+      console.log('slice > submit', action)
       state.users = [
-        ...state.users, action
+        ...state.users,
+        action.payload
       ]
     },
     increment: (state) => {
